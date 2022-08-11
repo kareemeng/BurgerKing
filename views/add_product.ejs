@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<%- include('./partials/header.ejs') %>
+
+    <body>
+        <!-- Nav Bar Start -->
+        <%- include('./partials/nav.ejs') %>
+            <!-- Nav Bar End -->
+
+
+            <!-- Page Header Start -->
+            <div class="page-header mb-0">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                            <h2>Add Product</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Page Header End -->
+            <main>
+
+                <form class="products-form" action='/admin/addproduct' method="post">
+                    <% console.log(Category) %>
+                        <div class="form-controls">
+                            product name:<input type="text" name="Productname">
+                        </div>
+                        <div class="form-controls">
+                            product price:<input type="text" name="Productprice">
+                        </div>
+                        <div class="form-controls">
+
+                            product discription:<input type="text" name="Productdiscription">
+                        </div>
+                        <div class="form-controls">
+
+                            product image:<input type="file" name="Productimge">
+                        </div>
+                        <div class="form-controls">
+
+                            Category name: <select name="Productccategory">
+                                <% Category.forEach(cat => { %>
+                                    <option value="<%= cat.Categoryname%>"> <%= cat.Categoryname%> </option>
+                                <% }) %> 
+                            </select>
+                        </div>
+                        <button type="submit" class="btn custom-btn" style="width: 100px ;height: 50px;">insert</button>
+                </form>
+            </main>
+    </body>
+
+</html>

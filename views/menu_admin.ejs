@@ -1,0 +1,111 @@
+<html lang="en">
+<link rel="stylesheet" href="/css/main.css">
+<%- include('./partials/header.ejs') %>
+
+    <body>
+        <%- include('./partials/nav.ejs') %>
+            <!-- Nav Bar Start -->
+            <!-- Nav Bar End -->
+
+
+            <!-- Page Header Start -->
+            <div class="page-header mb-0">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                            <h2>Admin page</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="admin_Add">
+                    <a href="/admin/addcategory" class="btn">add category</a>
+                    <% if (Category.length > 0) { %>
+                        <a href="/admin/addproduct" class="btn">add product</a>
+                        <% } %>
+                </div>
+            </div>
+            <!-- Page Header End -->
+
+            <!-- Menu Start -->
+            <div class="menu">
+                <div class="container">
+                    <div class="section-header text-center">
+                        <p>Food Menu</p>
+                        <h2>Delicious Food Menu</h2>
+                    </div>
+                    <div class="menu-tab">
+                        <% Category.forEach(category => { %>
+                            <ul class="nav nav-pills justify-content-center" style="display: contents;">
+                                <li class="nav-item">
+                                    <div class="nav-link active">
+                                        <h2 class="nav-link active" style="display: inline-block;">
+                                            <%= category.Categoryname%>
+                                        </h2>
+                                        <div style="display: contents; ">
+                                            <form action="/admin/delete-category" method="post" style="display: contents;">
+                                                <input type="hidden" value="<%= category._id%>" name="catId">
+                                                <input type="hidden" value="<%= category.Categoryname%>" name="catname">
+                                                <button class="btn nav-link " type="submit" style="display: inline-block;">Delete category</button>
+                                            </form>
+                                            <a class="btn nav-link " href="/admin/updatecategory/<%=category._id%>?edit=true" style="display: inline-block;">Edit category </a>
+                                        </div>
+                                    </div>
+
+                                </li>
+                                <div class="tab-content">
+                                    <div id="" class="container tab-pane active">
+                                        <div class="row">
+                                            <div class="col-lg-7 col-md-12">
+                                                <% Product.forEach(pro => { %>
+                                                    <% if(category.Categoryname === pro.Productccategory){ %>
+                                                        <div class="menu-item">
+                                                            <div class="menu-img">
+                                                                <img src="<%= pro.Productimge%>" alt="Image">
+                                                            </div>
+                                                            <div class="menu-text">
+
+                                                                <h3> <span><%=pro.Productname%></span> <strong><%=pro.Productprice%></strong></h3>
+                                                                <p>
+                                                                    <%=pro.Productdescription%>
+                                                                </p>
+
+                                                            </div>
+
+                                                            <form action="/admin/delete-product" method="post" style="    display: contents;">
+                                                                <input type="hidden" value="<%= pro._id%>" name="proID">
+                                                                <button class="btn" type="submit">Delete</button>
+                                                            </form>
+                                                            <a href="/admin/updateproduct/<%=pro._id%> " class="btn">Edit</a>
+
+                                                        </div>
+
+                                                        <% } %>
+                                                            <% }) %>
+                                            </div>
+                                            <div class="col-lg-5 d-none d-lg-block">
+                                                <img src="<%= category.Categoryimge %>" alt="Image" style="width: 500px; height: 400px;">
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </ul>
+                            <% }) %>
+                    </div>
+                </div>
+            </div>
+            <!-- Menu End -->
+
+
+            <!-- Footer End -->
+
+            <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
+
+    </body>
+    <%- include('./partials/footer.ejs') %>
+
+
+</html>

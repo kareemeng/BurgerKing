@@ -1,0 +1,15 @@
+<%- include('./partials/header.ejs') %>
+    <form action='/admin/updateproduct' method="post">
+        <% console.log(Category) %>
+            product name:<input type="text" name="Productname" value="<%=pro.Productname%>"> product price:<input type="text" name="Productprice" value="<%=pro.Productprice%>"> product discription: <input type="text" name="Productdiscription" value="<%=pro.Productdescription%>">            product image:<input type="file" name="Productimge" value="<%=pro.Productimge%>"> Category name:<select name="Productcategory">
+            <% Category.forEach(cat => { %>
+                <option value="<%= cat.Categoryname%>">
+                    <%= cat.Categoryname%>
+                </option>
+                <% }) %>
+                    </select>
+            <input type="hidden" value="<%=pro._id%>" name="proID">
+
+            <input type="submit" value="insert">
+
+    </form>

@@ -1,0 +1,136 @@
+<main>
+    <div class="container" id="container">
+        <div class="form-container sign-up-container">
+            <form class="sign form" action="/">
+                <h1>Create Account</h1>
+                <input name="username" type="text" placeholder="Name" />
+                <div class="name error" id="nameError"></div>
+                <input name="usermobile" type="text" placeholder="phone" />
+                <div class="mobile error" id="mobileError"></div>
+                <input name="useremail" type="email" placeholder="Email" />
+                <div class="email error" id="emailError"></div>
+                <input name="userpassword" type="password" placeholder="Password" />
+                <div class="password error" id="passwordError"></div>
+                <!-- <a name="usertype" value="0"></a> -->
+                <button>Sign Up</button>
+            </form>
+        </div>
+        <script>
+            const form = document.querySelector('.sign.form');
+            const nameError = document.querySelector('.name.error');
+            const mobileError = document.querySelector('.mobile.error');
+            const emailError = document.querySelector('.email.error');
+            const passwordError = document.querySelector('.password.error');
+            form.addEventListener('submit', async(sief) => {
+                sief.preventDefault();
+                // reset error messagsief
+                nameError.textContent = '';
+                mobileError.textContent = '';
+                emailError.textContent = '';
+                passwordError.textContent = '';
+                //get values 
+                const name = form.username.value;
+                const mobile = form.usermobile.value;
+                const email = form.useremail.value;
+                const password = form.userpassword.value;
+                try {
+                    const res = await fetch('/auth/signup', {
+                        method: 'POST',
+                        body: JSON.stringify({
+                            username: name,
+                            usermobile: mobile,
+                            useremail: email,
+                            userpassword: password,
+                        }),
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                    });
+                    const data = await res.json();
+                    console.log(data);
+                    if (data.errors) {
+                        nameError.textContent = data.errors.username;
+                        mobileError.textContent = data.errors.usermobile;
+                        emailError.textContent = data.errors.useremail;
+                        passwordError.textContent = data.errors.userpassword;
+                    }
+                    if (data.user) {
+                        console.log('regesterd');
+                        location.assign('/');
+                    }
+                } catch (err) {
+                    console.log("err in regester");
+                    console.log(err);
+                }
+            })
+        </script>
+        <div class="form-container sign-in-container">
+            <form class="log form" method="post" action="/">
+                <h1>Sign in</h1>
+                <span>or use your account</span>
+                <input name="useremail" type="email" placeholder="Email" />
+                <div class="email2 error" id="emailError2"></div>
+                <input name="userpassword" type="password" placeholder="Password" />
+                <div class="password2 error" id="passwordError2"></div>
+                <button style="margin-top: 20px">Sign In</button>
+            </form>
+            <script>
+                const form2 = document.querySelector('.log.form');
+                const emailErrorlog = document.querySelector('.email2.error');
+                const passwordErrorlog = document.querySelector('.password2.error');
+                form2.addEventListener('submit', async(e) => {
+                    e.preventDefault();
+                    // reset error message
+                    emailErrorlog.textContent = '';
+                    passwordErrorlog.textContent = '';
+                    //get values 
+                    const emaillog = form2.useremail.value;
+                    const passwordlog = form2.userpassword.value;
+                    try {
+                        const res2 = await fetch('/auth/login', {
+                            method: 'POST',
+                            body: JSON.stringify({
+                                useremail: emaillog,
+                                userpassword: passwordlog,
+                            }),
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                        });
+                        const data2 = await res2.json();
+                        console.log(data2);
+                        if (data2.errors) {
+                            emailErrorlog.textContent = data2.errors.useremail;
+                            passwordErrorlog.textContent = data2.errors.userpassword;
+                        }
+                        if (data2.user) {
+                            console.log('logedin');
+                            location.assign('/');
+                        }
+                    } catch (err) {
+                        console.log(err);
+                    }
+                })
+            </script>
+        </div>
+        <div class="overlay-container">
+            <div class="overlay">
+                <div class="overlay-panel overlay-left">
+                    <h1>Welcome Back!</h1>
+                    <p>To keep connected with us please login with your personal info</p>
+                    <button class="ghost" id="signIn">Sign In</button>
+                    <button class="ghost back" id="signInBack">Home</button>
+                </div>
+                <div class="overlay-panel overlay-right">
+                    <h1>Hello, Friend!</h1>
+                    <p>Enter your personal details and start journey with us</p>
+                    <button class="ghost" id="signUp">Sign Up</button>
+                    <button class="ghost back" id="signUpBack">Home</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <link href="../css/log-style.css" rel="stylesheet">
+    <script src="../javascripts/login-regester.js"></script>
+
+</main>

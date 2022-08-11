@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<%- include('./partials/header.ejs') %>
+
+    <body>
+        <!-- Nav Bar Start -->
+        <%- include('./partials/nav.ejs') %>
+            <!-- Nav Bar End -->
+
+
+            <!-- Page Header Start -->
+            <div class="page-header mb-0">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                            <h2>
+                                <%= pageTitle %>
+                            </h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Page Header End -->
+            <main>
+                <form class="products-forms" action='/<%if (editing) {%>admin/updatecategory<% }else {%>admin/addcategory<% } %>' method="post">
+                    <div class="forms-controls">
+                        Category name:<input type="text" name="Categoryname" value="<%if (editing) {%><%=category.Categoryname%><% } %>">
+                    </div>
+                    <div class="forms-controls">
+                        Category image:<input type="file" name="Categoryimge" value="<%if (editing) {%><%=category.Categoryimge%><% } %>">
+                    </div>
+                    <%if (editing) { %>
+                        <input type="hidden" value="<%= category._id%>" name="catid">
+                        <% } %>
+
+                            <button type="submit" class="btn custom-btn" style="width: 100px ;height: 50px;">
+        <%if (editing) {%>Update <% }else {%> Insert <%}%></button>
+
+                </form>
+            </main>
+            <%- include('./partials/footer.ejs') %>
+
+    </body>
+
+</html>

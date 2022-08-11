@@ -1,0 +1,7 @@
+<form action='/admin/updatecategory' method="post">
+
+    Category name:<input type="text" name="Categoryname" value="<%= category.Categoryname  %>"> Category image:<input type="file" name="Categoryimge" value="<%= category.Categoryimge  %>">
+    <input type="hidden" value="<%= category._id%>" name="catid">
+    <input type="submit" value="insert">
+
+</form>
